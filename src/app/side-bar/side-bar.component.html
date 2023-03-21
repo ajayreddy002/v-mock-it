@@ -1,0 +1,51 @@
+<div class="w-100">
+  <div class="d-flex flex-column flex-shrink-0 side-bar min-vh-100">
+    <div class="logo-block ms-3 pt-3 mb-3">
+      <h3>Mock <span class="it-text">It</span></h3>
+    </div>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          aria-current="page"
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="bi bi-speedometer2"></i>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a
+          class="nav-link link-dark"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="bi bi-clipboard-data"></i>
+          Reports
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/schedule"
+          class="nav-link link-dark"
+          routerLinkActive="active"
+        >
+          <i class="bi bi-calendar3-event"></i>
+          Calendar
+        </a>
+      </li>
+      <li>
+        <a
+          class="nav-link link-dark"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="bi bi-share"></i>
+          Refer a friend
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,1 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("~bootstrap/dist/css/bootstrap.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap");
+@import url('~bootstrap-icons/font/bootstrap-icons.css');
+@import url('~bulma/css/bulma.min.css');
+@import url('bulma-calendar.min.css');
+@import url('~primeng/resources/primeng.min.css');
+@import url('~primeicons/primeicons.css');
+@import url('~primeng/resources/themes/lara-light-indigo/theme.css');
+@import url('~@angular/material/prebuilt-themes/indigo-pink.css');
+input {
+  &:focus {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+}
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+button,
+label {
+  font-family: "Poppins", sans-serif;
+  color: #3c3c3c;
+}
+.logo-block {
+  h3 {
+    font-size: 30px;
+    font-weight: 800;
+    .it-text {
+      color: #1313ed;
+    }
+  }
+}
+.top-bar {
+  padding: 15px;
+  background-color: #f7f7f7;
+i {
+  font-size: 16px;
+}
+a {
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #3c3c3c;
+}
+.user-icon {
+  width: 30px;
+  height: 30px;
+  background: #5bc993;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  margin-right: 10px;
+}
+}
+.main-content {
+margin-left: 200px;
+}
+.fc-button-group,.fc-toolbar-chunk {
+  button {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 15px !important;
+    text-transform: capitalize !important;
+  }
+}
+.fc-toolbar-title {
+  font-family: "Poppins", sans-serif !important;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
