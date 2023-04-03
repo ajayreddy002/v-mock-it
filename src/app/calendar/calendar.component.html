@@ -36,7 +36,6 @@
           *ngIf="day.value !== 0"
           class="date-item"
           (click)="selectDay(day)"
-          [class.is-warn]="day.available"
           routerLink="/create"
         >
           {{ day.value }}

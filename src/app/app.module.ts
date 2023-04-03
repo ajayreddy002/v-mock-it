@@ -18,11 +18,13 @@ import { ScheduleCreateDialogComponent } from './schedule-create-dialog/schedule
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {NgxMatTimepickerModule} from 'ngx-mat-timepicker'; 
 import { MatInputModule } from '@angular/material/input';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
+import { DialogService, DynamicDialogConfig, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -47,15 +49,18 @@ import { MatChipsModule } from '@angular/material/chips';
     DropdownModule,
     NgxMatTimepickerModule,
     MatInputModule,
-    MatDialogModule,
     MatAutocompleteModule,
     MatIconModule,
     MatFormFieldModule,
-    MatChipsModule
+    MatChipsModule,
+    DynamicDialogModule,
+    CardModule
   ],
   providers: [
-    { provide: MAT_DIALOG_DATA, useValue: {} },
-    { provide: MatDialogRef, useValue: {} }
+    DialogService,
+    DynamicDialogConfig
+    // { provide: MAT_DIALOG_DATA, useValue: {} },
+    // { provide: MatDialogRef, useValue: {} }
   ],
   bootstrap: [AppComponent]
 })

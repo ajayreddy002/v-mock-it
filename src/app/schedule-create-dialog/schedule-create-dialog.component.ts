@@ -1,17 +1,7 @@
-import {
-  Component,
-  Input,
-  Inject,
-  OnInit,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, Input, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { FormControl } from '@angular/forms';
-import { map, Observable, startWith } from 'rxjs';
+import * as moment from 'moment';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 interface Roles {
   name: string;
   code: string;
@@ -46,56 +36,13 @@ export class ScheduleCreateDialogComponent implements OnInit {
       code: 'Angular',
     },
   ];
-  skills = ['Angular', 'react'];
-  selectedSkills: string[] = [];
-  selectedRole = {} as Roles;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  @ViewChild('skillInput') skillInput!: ElementRef<HTMLInputElement>;
-  skillCtrl = new FormControl('');
-  filteredSkills!: Observable<string[]>;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  selectedData: any;
+
+  constructor(private config: DynamicDialogConfig) {}
   ngOnInit(): void {
-    console.log(this.data.startStr);
-    this.filteredSkills = this.skillCtrl.valueChanges.pipe(
-      startWith(null),
-      map((fruit: string | null) =>
-        fruit ? this._filter(fruit) : this.skills.slice()
-      )
-    );
-  }
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Add our fruit
-    if (value) {
-      this.selectedSkills.push(value);
+    if(this.config.data){
+      this.selectedData = this.config.data;
     }
-
-    // Clear the input value
-    event.chipInput!.clear();
-
-    this.skillCtrl.setValue(null);
-  }
-
-  remove(fruit: string): void {
-    const index = this.selectedSkills.indexOf(fruit);
-
-    if (index >= 0) {
-      this.selectedSkills.splice(index, 1);
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.selectedSkills.push(event.option.viewValue);
-    this.skillInput.nativeElement.value = '';
-    this.skillCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.skills.filter((fruit) =>
-      fruit.toLowerCase().includes(filterValue)
-    );
+    console.log(this.config.data)
   }
 }

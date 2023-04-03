@@ -1,4 +1,14 @@
 <div class="container">
-    <full-calendar [options]="calendarOptions"></full-calendar>
-    <app-schedule-create-dialog *ngIf="showScheduleDialog" [display]="showScheduleDialog"></app-schedule-create-dialog>
+  <div class="row">
+    <div class="col-md-4">
+      <app-calendar (onCalendarDateSelect)="changeDate($event)"></app-calendar>
+    </div>
+    <div class="col-md-8">
+      <full-calendar #fullCalendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+  <app-schedule-create-dialog
+    *ngIf="showScheduleDialog"
+    [display]="showScheduleDialog"
+  ></app-schedule-create-dialog>
 </div>

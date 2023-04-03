@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -12,7 +12,7 @@ export class CalendarComponent implements OnInit {
   weekDaysHeaderArr: Array<string> = [];
   gridArr: Array<any> = [];
   selectedDate: any;
-
+  @Output() onCalendarDateSelect:EventEmitter<Date> = new EventEmitter();
   constructor() {}
   ngOnInit(): void {
     moment.locale(this.localeString);
@@ -83,6 +83,8 @@ export class CalendarComponent implements OnInit {
   selectDay(day: any) {
     if (day.available) {
       this.selectedDate = this.dateFromNum(day.value, this.navDate);
+      console.log(moment(this.selectedDate).format('YYYY-MM-DD'))
+      this.onCalendarDateSelect.emit(this.selectedDate);
     }
   }
 }
