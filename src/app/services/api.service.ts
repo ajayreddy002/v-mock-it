@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
   get(endPoint: string) {
-    return this.httpClient.get(`${environment.baseAPIUrl}/${endPoint}`);
+    return this.httpClient.get<any>(`${environment.baseAPIUrl}${endPoint}`);
   }
   post(endPoint: string, body: any) {
     return this.httpClient.post(`${environment.baseAPIUrl}${endPoint}`, body);

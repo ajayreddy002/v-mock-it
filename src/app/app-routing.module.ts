@@ -13,7 +13,7 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
-      { path: 'create', component: ScheduleComponent },
+      { path: 'schedules', component: ScheduleComponent },
       { path: 'jist', component: MeetComponent },
     ],
   },

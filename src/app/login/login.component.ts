@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
               summary: 'Login',
             });
             localStorage.setItem('token', data.token);
-            this.router.navigate(['create'])
+            this.router.navigate(['schedules'])
           }
           console.log(data);
         });

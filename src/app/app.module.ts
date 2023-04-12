@@ -29,7 +29,8 @@ import { MeetComponent } from './meet/meet.component';
 import { MessageService } from 'primeng/api';
 import { ApiService } from './services/api.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppInterceptor } from './http.interceptor';
+import { AppInterceptor } from './helpers/http.interceptor';
+import { ErrorInterceptor } from './helpers/error.interceptor';
 const config: SocketIoConfig = { url: 'http://localhost:8008', options: {} };
 
 @NgModule({
@@ -69,6 +70,11 @@ const config: SocketIoConfig = { url: 'http://localhost:8008', options: {} };
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true,
     },
   ],

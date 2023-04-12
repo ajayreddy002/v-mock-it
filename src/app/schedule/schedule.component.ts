@@ -1,8 +1,9 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild, OnInit } from '@angular/core';
 import {
   CalendarOptions,
   DateSelectArg,
   EventClickArg,
+  EventSourceInput,
 } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -12,12 +13,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { ScheduleCreateDialogComponent } from '../schedule-create-dialog/schedule-create-dialog.component';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ScheduleService } from '../services/schedule.service';
+import { catchError, of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { SlotsResponse } from '../models/schedule-interface';
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss'],
 })
-export class ScheduleComponent implements OnDestroy {
+export class ScheduleComponent implements OnDestroy, OnInit {
   @ViewChild('fullCalendar') fullcalendar: FullCalendarComponent | undefined;
   dialogRef: DynamicDialogRef | undefined;
   calendarOptions: CalendarOptions = {
@@ -34,44 +39,67 @@ export class ScheduleComponent implements OnDestroy {
       center: 'title',
       right: '',
     },
-    events: [
-      { title: 'event 1', date: '2023-04-01' },
-      {
-        title: 'event 2',
-        start: moment(new Date()).toISOString(),
-        end: moment(new Date()).add(2, 'hours').toISOString(),
-      },
-      { title: 'event 2', date: '2023-04-02' },
-    ],
+    events: [],
     eventClick: this.handleEventClick.bind(this),
     select: this.handleDateSelect.bind(this),
     slotMinTime: '08:00 Am',
     initialDate: new Date(),
   };
   showScheduleDialog = false;
-  constructor(public dialog: MatDialog, public dialogService: DialogService) {}
+  constructor(
+    public dialog: MatDialog,
+    public dialogService: DialogService,
+    private scheduleService: ScheduleService
+  ) {}
+  ngOnInit(): void {
+    this.getSlots();
+  }
   handleEventClick(clickInfo: EventClickArg) {
     console.log(clickInfo.event.title);
   }
   handleDateSelect(selectInfo: DateSelectArg) {
-    console.log(selectInfo);
     this.showScheduleDialog = true;
-    this.dialogRef = this.dialogService.open(ScheduleCreateDialogComponent, {
-      header: `Scheduling interview on ${moment(selectInfo.startStr).format('DD MMM YYYY')}`,
-      width: '36rem',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-      maximizable: false,
-      modal: true,
-      data: selectInfo
-    });
+    const selectedTime = moment(new Date(selectInfo.startStr), 'h:mma');
+    const curretTime = moment(new Date(), 'h:mma');
+    if (selectedTime.isAfter(curretTime)) {
+      console.log('Greater');
 
-    this.dialogRef.onClose.subscribe(() => {
+      this.dialogRef = this.dialogService.open(ScheduleCreateDialogComponent, {
+        header: `Scheduling interview on ${moment(selectInfo.startStr).format(
+          'DD MMM YYYY'
+        )}`,
+        width: '36rem',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: false,
+        modal: true,
+        data: selectInfo,
+      });
+    }
+
+    this.dialogRef?.onClose.subscribe(() => {
       console.log('Dialog closed');
+      this.getSlots();
     });
   }
   changeDate(event: Date) {
     this.fullcalendar?.getApi().gotoDate(moment(event).format('YYYY-MM-DD'));
+  }
+  getSlots() {
+    this.scheduleService.getAllSlots().subscribe((data: SlotsResponse) => {
+      if (data && data.slots.length > 0) {
+        let events: any[] = [];
+        data.slots.map((slot) => {
+          events.push({
+            title: 'Slot has filled',
+            start: moment(slot.startTime).toISOString(),
+            end: moment(slot.endTime).toISOString(),
+            color: 'red',
+          });
+        });
+        this.calendarOptions.events = events;
+      }
+    });
   }
   ngOnDestroy() {
     if (this.dialogRef) {
