@@ -1,3 +1,4 @@
+<p-toast position="top-center"></p-toast>
 <div class="dialog-header">
   <div class="row">
     <div class="col-md-12">
@@ -38,7 +39,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row m-0">
     <div class="col-6">
       <div class="label">Start time</div>
       <p class="flex align-items-center m-0">
@@ -54,52 +55,44 @@
       </p>
     </div>
   </div>
-  <div class="row my-3">
-    <h4 class="mb-2">Choose your plan</h4>
-    <div class="col-4">
-      <div class="card bg-sky-blue">
-        <div class="card-header d-flex flex-column">
-          <h5 class="card-title">Web developer</h5>
-          <h5 class="price">Rs. 119 /-</h5>
+  <div class="row my-3 m-0">
+    <h4 class="mb-2 p-0 plan-title">Choose your plan</h4>
+    <div
+      class="card mb-3"
+      *ngFor="let plan of plans; let i = index"
+      [ngClass]="{ active: plan.selected }"
+    >
+      <div class="skill-card" (click)="makeCardSelected(plan, i)">
+        <div class="skill-block">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="pricing"
+              [id]="i"
+              value="premium"
+              [checked]="plan.selected"
+            />
+          </div>
+          <div class="skills">
+            <h5 class="card-title">{{ plan.planName }}</h5>
+            <ul>
+              <li class="badge badge-pill" *ngFor="let skill of plan.skills">
+                {{ skill }}
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="card-body">
-          <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>Javascript</li>
-          </ul>
+        <div class="price-block">
+          <h5 class="price">&#8377; 119</h5>
         </div>
       </div>
     </div>
-    <div class="col-4">
-      <div class="card bg-blue">
-        <div class="card-header d-flex flex-column">
-          <h5 class="card-title">Web developer</h5>
-          <h5 class="price">Rs. 119 /-</h5>
-        </div>
-        <div class="card-body">
-          <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>Javascript</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="card">
-        <div class="card-header d-flex flex-column">
-          <h5 class="card-title">Web developer</h5>
-          <h5 class="price">Rs. 119 /-</h5>
-        </div>
-        <div class="card-body">
-          <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>Javascript</li>
-          </ul>
-        </div>
-      </div>
+  </div>
+  <div class="dialog-footer">
+    <div class="btn-block">
+      <button type="button" (click)="closeDialog()" class="btn cancel-btn" aria-labelledby="schedule the interview">Cancel</button>
+      <button type="button" (click)="scheduleInterview()" class="btn submit-btn" aria-labelledby="schedule the interview">Schedule</button>
     </div>
   </div>
 </div>

@@ -10,21 +10,27 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import {DialogModule} from 'primeng/dialog';
-import {CalendarModule} from 'primeng/calendar';
-import {DropdownModule} from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScheduleCreateDialogComponent } from './schedule-create-dialog/schedule-create-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {NgxMatTimepickerModule} from 'ngx-mat-timepicker'; 
-import { MatInputModule } from '@angular/material/input';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatChipsModule } from '@angular/material/chips';
-import { DialogService, DynamicDialogConfig, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogModule,
+} from 'primeng/dynamicdialog';
 import { CardModule } from 'primeng/card';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { ToastModule } from 'primeng/toast';
+import { MeetComponent } from './meet/meet.component';
+import { MessageService } from 'primeng/api';
+import { ApiService } from './services/api.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppInterceptor } from './http.interceptor';
+const config: SocketIoConfig = { url: 'http://localhost:8008', options: {} };
 
 @NgModule({
   declarations: [
@@ -35,7 +41,8 @@ import { CardModule } from 'primeng/card';
     CalendarComponent,
     DashboardComponent,
     ScheduleComponent,
-    ScheduleCreateDialogComponent
+    ScheduleCreateDialogComponent,
+    MeetComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,20 +55,23 @@ import { CardModule } from 'primeng/card';
     ReactiveFormsModule,
     DropdownModule,
     NgxMatTimepickerModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatChipsModule,
     DynamicDialogModule,
-    CardModule
+    CardModule,
+    SocketIoModule.forRoot(config),
+    ToastModule,
+    HttpClientModule,
   ],
   providers: [
     DialogService,
-    DynamicDialogConfig
-    // { provide: MAT_DIALOG_DATA, useValue: {} },
-    // { provide: MatDialogRef, useValue: {} }
+    DynamicDialogConfig,
+    MessageService,
+    ApiService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppInterceptor,
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

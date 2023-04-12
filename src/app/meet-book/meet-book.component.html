@@ -1,3 +1,56 @@
-<div>
-  <app-calendar></app-calendar>
+<div class="meeting-container" *ngIf="!showMeet">
+  <div class="main-block">
+    <div class="row m-0">
+      <div class="col-md-6 col-sm-6 col-lg-6">
+        <div
+          class="d-flex align-items-center flex-column h-100 justify-content-center"
+        >
+          <form class="form-block">
+            <div class="form-header">
+              <h1>Welcome to Mock It</h1>
+              <p>Joining interview for web developer</p>
+            </div>
+            <div class="">
+              <div class="form-group mb-3">
+                <input
+                  type="text"
+                  aria-labelledby="userName"
+                  name="userName"
+                  id="userName"
+                  class="form-control"
+                  placeholder="Please enter your name"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  aria-labelledby="passCode"
+                  name="passCode"
+                  id="passCode"
+                  class="form-control"
+                  placeholder="Please enter your pass code"
+                  [(ngModel)]="passCode"
+                />
+              </div>
+              <div class="btn-block">
+                <button [disabled]="!passCode" (click)="joinUserToMeet()" class="btn btn-primary">
+                  Join now
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+        <img
+          src="/assets/images/video-interview.png"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showMeet">
+  <app-meet></app-meet>
 </div>

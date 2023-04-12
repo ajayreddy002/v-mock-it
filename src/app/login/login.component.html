@@ -1,8 +1,11 @@
-<div class="login-main d-flex align-items-center justify-content-center min-vh-100">
+<div
+  class="login-main d-flex align-items-center justify-content-center min-vh-100"
+>
   <div class="login-block">
     <div class="logo-block text-center">
-        <h3>Mock <span class="it-text">It</span></h3>
+      <h3>Mock <span class="it-text">It</span></h3>
     </div>
+    <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
       <div class="form-group pb-2">
         <div class="col-auto">
           <label for="userName" class="col-form-label">Email</label>
@@ -13,29 +16,44 @@
             id="userName"
             class="form-control"
             aria-describedby="passwordHelpInline"
+            formControlName="email"
           />
         </div>
-    </div>
-    <div class="row g-3 align-items-center pb-2">
-      <div class="form-group">
-        <div class="col-auto">
-          <label for="password" class="col-form-label">Password</label>
-        </div>
-        <div class="col-auto">
-          <input
-            type="password"
-            id="password"
-            class="form-control"
-          />
+        <div
+          class="err-msg"
+          *ngIf="isSubmitted && loginForm.controls['email'].errors?.['required']"
+        >
+          Please enter email
         </div>
       </div>
-    </div>
-    <div class="w-100">
-        <button class="w-100 btn btn-success mt-3">Login</button>
-    </div>
+      <div class="row g-3 align-items-center pb-2">
+        <div class="form-group">
+          <div class="col-auto">
+            <label for="password" class="col-form-label">Password</label>
+          </div>
+          <div class="col-auto">
+            <input
+              formControlName="password"
+              type="password"
+              id="password"
+              class="form-control"
+            />
+          </div>
+          <div
+            class="err-msg"
+            *ngIf="isSubmitted && loginForm.controls['email'].errors?.['required']"
+          >
+            Please enter password
+          </div>
+        </div>
+      </div>
+      <div class="w-100">
+        <button type="submit" class="w-100 btn btn-success mt-3">Login</button>
+      </div>
+    </form>
     <div class="bottom-link d-flex align-items-center mt-3 flex-column">
-        <p class="mb-0">New to mock it ?</p>
-        <a href="">Create an account</a>
+      <p class="mb-0">New to mock it ?</p>
+      <a href="">Create an account</a>
     </div>
   </div>
 </div>
