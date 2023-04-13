@@ -97,6 +97,7 @@ export class ScheduleCreateDialogComponent implements OnInit {
         skills: this.selectedPlan.skills,
         participants: ['642402cb95e1772fa0f05c24'],
         startTime: this.selectedData.start,
+        selectedPlan: this.selectedPlan.planName,
         endTime: this.selectedData.end,
         date: moment(this.selectedData.start).format('YYYY-MM-DD'),
         resume: 'test.pdf',
@@ -125,7 +126,7 @@ export class ScheduleCreateDialogComponent implements OnInit {
           })
         )
         .subscribe((data: any) => {
-          if (data && data.status === 'Success'){
+          if (data && data.status === 'Success') {
             this.messageService.add({
               detail: data.message,
               severity: 'success',

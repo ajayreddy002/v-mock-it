@@ -25,12 +25,14 @@ import {
 import { CardModule } from 'primeng/card';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ToastModule } from 'primeng/toast';
+import { TabViewModule } from 'primeng/tabview';
 import { MeetComponent } from './meet/meet.component';
 import { MessageService } from 'primeng/api';
 import { ApiService } from './services/api.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppInterceptor } from './helpers/http.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 const config: SocketIoConfig = { url: 'http://localhost:8008', options: {} };
 
 @NgModule({
@@ -44,6 +46,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8008', options: {} };
     ScheduleComponent,
     ScheduleCreateDialogComponent,
     MeetComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8008', options: {} };
     SocketIoModule.forRoot(config),
     ToastModule,
     HttpClientModule,
+    TabViewModule
   ],
   providers: [
     DialogService,
